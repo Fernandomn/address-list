@@ -1,0 +1,21 @@
+$columnNames: 'Numero', 'Nome', 'CEP', 'Rua', 'Complemento', 'Bairro', 'Cidade', 'UF';
+
+//mat-card {
+//  width: 80%;
+//}
+//
+table {
+  width: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+@each $column in $columnNames {
+  .mat-column-#{$column} {
+    //your custom css
+    text-align: right;
+    margin: auto;
+  }
+}

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'address-list';
+
+  constructor(private fb: FormBuilder) {
+  }
+
+  public loginForm = this.fb.group({
+    email: ['', [Validators.required]],
+    password: ['', Validators.required]
+  });
 }

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdressScreenComponent } from './adress-screen.component';
+import { AddressModalComponent } from './address-modal.component';
 
-describe('AdressScreenComponent', () => {
-  let component: AdressScreenComponent;
-  let fixture: ComponentFixture<AdressScreenComponent>;
+describe('AdressModalComponent', () => {
+  let component: AddressModalComponent;
+  let fixture: ComponentFixture<AddressModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdressScreenComponent ]
+      declarations: [ AddressModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdressScreenComponent);
+    fixture = TestBed.createComponent(AddressModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdressGridComponent } from './adress-grid.component';
+import { AddressScreenComponent } from './address-screen.component';
 
-describe('AdressGridComponent', () => {
-  let component: AdressGridComponent;
-  let fixture: ComponentFixture<AdressGridComponent>;
+describe('AdressScreenComponent', () => {
+  let component: AddressScreenComponent;
+  let fixture: ComponentFixture<AddressScreenComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdressGridComponent ]
+      declarations: [ AddressScreenComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdressGridComponent);
+    fixture = TestBed.createComponent(AddressScreenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
