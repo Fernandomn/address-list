@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {Address} from '../../address';
+import {Address} from '../../interfaces/address';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Endereco, ErroCep, ErrorValues, NgxViacepService} from '@brunoc/ngx-viacep';
 import {MatSnackBar} from '@angular/material/snack-bar';

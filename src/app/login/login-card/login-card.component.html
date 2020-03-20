@@ -1,25 +1,5 @@
-<!--<div class="card " style="width: 300px;">-->
-<!--  <div [ngClass]="'card-header'">-->
-<!--    <h3 [ngClass]="'card-title'">Sua agenda</h3>-->
-<!--    <h4 [ngClass]="'card-subtitle text-muted'">Seja bem vindo!</h4>-->
-<!--  </div>-->
-<!--  <div [ngClass]="'card-body'">-->
-<!--    <form [formGroup]="loginForm">-->
-<!--      <div [ngClass]="'form-group row'">-->
-<!--        <label [ngClass]="'col-md-2 col-form-label'"></label>-->
-<!--        <div [ngClass]="'col-md-10'">-->
-<!--          <input type="email" id="email" [ngClass]="'form-control'">-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div [ngClass]="'form-group'">-->
-<!--        <label></label>-->
-<!--        <input>-->
-<!--      </div>-->
-<!--    </form>-->
-<!--  </div>-->
-<!--</div>-->
-
 <mat-card>
+  <!--  [ngClass]="'container'">-->
   <mat-card-header>
     <mat-card-title>
       Sua Agenda
@@ -28,26 +8,78 @@
   </mat-card-header>
 
   <mat-card-content>
-    <form [formGroup]="loginForm">
-      <div>
-        <mat-form-field appearance="fill" [floatLabel]="'auto'">
-          <mat-label>E-mail:</mat-label>
-          <input matInput type="text" formControlName="email"
-                 placeholder="usuario@email.com" email required>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field appearance="fill" floatLabel="auto">
-          <mat-label>Senha:</mat-label>
-          <input matInput type="password" formControlName="password" placeholder="***" required="">
-        </mat-form-field>
-      </div>
-    </form>
+    <mat-tab-group [selectedIndex]="selected.value"
+                   (selectedIndexChange)="selected.setValue($event)">
+      <mat-tab label="Login">
+        <form [formGroup]="loginForm" [ngClass]="'container'">
+          <div [ngClass]="'row'">
+            <mat-form-field [floatLabel]="'auto'" [ngClass]="'col'">
+              <mat-label>Nome de usuário:</mat-label>
+              <input matInput type="text" formControlName="username"
+                     placeholder="ex: ferna123" required>
+            </mat-form-field>
+          </div>
+          <div [ngClass]="'row'">
+            <mat-form-field floatLabel="auto" [ngClass]="'col'">
+              <mat-label>Senha:</mat-label>
+              <input matInput type="password" formControlName="password"
+                     placeholder="***" required="">
+            </mat-form-field>
+          </div>
+          <div [ngClass]="'row'">
+            <button mat-button class="login-submit"
+                    (click)="onSubmit(loginForm.value)"
+                    [disabled]="!loginForm.valid">
+              Login
+            </button>
+          </div>
+        </form>
+      </mat-tab>
+
+
+      <mat-tab label="Cadastre-se">
+        <form [formGroup]="registerForm" [ngClass]="'container'">
+          <div [ngClass]="'row'">
+            <mat-form-field [ngClass]="'col'">
+              <mat-label>Nome:</mat-label>
+              <input matInput type="text" formControlName="name"
+                     placeholder="'Ex: Fernando" required>
+            </mat-form-field>
+          </div>
+          <div [ngClass]="'row'">
+            <mat-form-field [ngClass]="'col'">
+              <mat-label>E-mail:</mat-label>
+              <input matInput type="email" formControlName="email"
+                     placeholder="'Ex: ferna@address-list.com" required>
+            </mat-form-field>
+          </div>
+
+          <div [ngClass]="'row'">
+            <mat-form-field [floatLabel]="'auto'" [ngClass]="'col'">
+              <mat-label>Nome de usuário:</mat-label>
+              <input matInput type="text" formControlName="username"
+                     placeholder="ex: ferna123" required>
+            </mat-form-field>
+          </div>
+          <div [ngClass]="'row'">
+            <mat-form-field floatLabel="auto" [ngClass]="'col'">
+              <mat-label>Senha:</mat-label>
+              <input matInput type="password" formControlName="password"
+                     placeholder="***" required="">
+            </mat-form-field>
+          </div>
+          <div [ngClass]="'row'">
+            <button mat-button class="register-submit"
+                    (click)="onCreateRegister(registerForm.value)"
+                    [disabled]="!registerForm.valid">
+              Registrar
+            </button>
+          </div>
+
+        </form>
+      </mat-tab>
+    </mat-tab-group>
+
   </mat-card-content>
 
-  <mat-card-actions>
-    <button mat-button class="login-submit" (click)="onSubmit(loginForm.value)" [disabled]="!loginForm.valid">
-      <mat-icon aria-hidden="false" aria-label="Login">check</mat-icon>
-    </button>
-  </mat-card-actions>
 </mat-card>

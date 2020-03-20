@@ -1,5 +1,5 @@
 import {Component, OnInit, SkipSelf, ViewChild} from '@angular/core';
-import {Address} from '../../address';
+import {Address} from '../../interfaces/address';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
 import {AddressModalComponent} from '../adress-modal/address-modal.component';
 import {MatDialog} from '@angular/material/dialog';

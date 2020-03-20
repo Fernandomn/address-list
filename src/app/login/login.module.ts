@@ -8,13 +8,17 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {ReactiveFormsModule} from "@angular/forms";
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 const matImports = [
   MatCardModule,
   MatIconModule,
   MatFormFieldModule,
   MatInputModule,
-  MatButtonModule
+  MatTabsModule,
+  MatButtonModule,
+  MatSnackBarModule,
 ]
 
 @NgModule({
@@ -28,7 +32,7 @@ const matImports = [
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ...matImports
+    ...matImports,
   ]
 })
 export class LoginModule {
