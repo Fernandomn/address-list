@@ -48,12 +48,13 @@ export class LoginCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit({email, password}) {
+  onSubmit({username, password}) {
     console.log('Submit!');
-    if (this.loginVerification(email, password)) {
+    const user = this.loginVerification(username, password)
+    if (!!user) {
       this.snackBar.open('Login efetuado com sucesso!', '',
         {duration: 1000});
-      this.goToAddressList();
+      this.goToAddressList(user);
       return;
     }
     this.snackBar.open('Login e/ou senha não registrados. Favor conferir.',
@@ -63,18 +64,19 @@ export class LoginCardComponent implements OnInit {
 
   private loginVerification(username: string, password: string) {
     const loginRegisters = JSON.parse(this.storageService.get(this.addressLogin));
-    const result = loginRegisters.find(element =>
+    const result: User = loginRegisters.find(element =>
       element.username === username && element.password === password
     );
-    return !!result;
+    return result;
   }
 
-  private goToAddressList() {
-    this.router.navigate(['address-screen']);
+  private goToAddressList(user?: User) {
+    this.router.navigate(['address-screen'],
+      user ? {state: {data: user}} : undefined);
   }
 
   onCreateRegister({name, email, username, password}) {
-    if (this.loginVerification(username, password)) {
+    if (!!this.loginVerification(username, password)) {
       const warningMsg = 'O usuário já existe';
       console.log(warningMsg);
       this.snackBar.open(warningMsg, '', {duration: 2000});

@@ -5,7 +5,10 @@ import {AddressModalComponent} from '../adress-modal/address-modal.component';
 import {MatDialog} from '@angular/material/dialog';
 import {RemoveAddressModalComponent} from '../remove-address-modal/remove-address-modal.component';
 import {StorageService} from '../../storage.service';
-import {MatSort} from "@angular/material/sort";
+import {MatSort} from '@angular/material/sort';
+import {User} from '../../interfaces/user';
+import {Router} from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 const MOCK_DATA: Address[] = [
   {
@@ -58,23 +61,33 @@ const MOCK_DATA: Address[] = [
 
 
 export class AddressGridComponent implements OnInit {
-  // dataSource = new MatTableDataSource(MOCK_DATA);
-  columnNames = ['Numero', 'Nome', 'CEP', 'Rua', 'Complemento', 'Bairro', 'Cidade', 'UF', 'actions'];
+  columnNames = ['Numero', 'Nome', 'CEP', 'Rua', 'Bairro', 'Cidade', 'UF', 'actions'];
+  // columnNames = ['Numero', 'Nome', 'CEP', 'Rua', 'Complemento', 'Bairro', 'Cidade', 'UF', 'actions'];
   storageTableKey = 'address-table';
-  dataList: Address[];
+  dataList: Address[] = [];
   dataSource: MatTableDataSource<Address>;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  user: User = {name: '', username: '', email: '', password: ''};
 
   constructor(
     public dialog: MatDialog,
+    private router: Router,
+    private snackBar: MatSnackBar,
     private storageService: StorageService
   ) {
-    // this.dataSource = new MatTableDataSource(this.dataList);
-    this.dataList = this.getLocalStorageTable();
-    this.refreshTable();
+
   }
 
   ngOnInit(): void {
+    const historyResult = history.state.data;
+    if (historyResult) {
+      this.user = historyResult;
+    } else {
+      this.snackBar.open('Favor efetuar novamente o login', '', {duration: 2000});
+      this.router.navigate(['login']);
+    }
+    this.dataList = this.getLocalStorageTable();
+    this.refreshTable();
+    // console.log(historyResult)
   }
 
   applyFilter(event: KeyboardEvent) {
@@ -99,12 +112,16 @@ export class AddressGridComponent implements OnInit {
           }
         });
       } else {
-        result.id = this.dataList.reduce((prev, current) =>
-          (prev.id > current.id) ? prev : current
-        ).id + 1;
+        result.id = !!this.dataList ? 1 :
+          this.dataList.reduce((prev, current) =>
+            (prev.id > current.id) ? prev : current
+          ).id + 1
+        ;
         this.dataList.push(result);
       }
-      this.storageService.set(this.storageTableKey, JSON.stringify(this.dataList));
+      console.log('depois de salvar')
+      this.storageService.set(`${this.storageTableKey}:${this.user.username}`,
+        JSON.stringify(this.dataList));
       // console.log('Actual LocalStorage: ', this.storageService.get(this.storageTableKey));
 
       this.refreshTable();
@@ -113,7 +130,6 @@ export class AddressGridComponent implements OnInit {
 
   private refreshTable() {
     this.dataSource = new MatTableDataSource(this.dataList);
-    this.dataSource.sort = this.sort
   }
 
   removeAddress(address: Address) {
@@ -127,14 +143,17 @@ export class AddressGridComponent implements OnInit {
         return;
       }
       this.dataList.splice(this.dataList.indexOf(result), 1);
-      this.storageService.set(this.storageTableKey, JSON.stringify(this.dataList));
+      this.storageService.set(`${this.storageTableKey}:${this.user.username}`,
+        JSON.stringify(this.dataList));
       this.refreshTable();
     });
   }
 
   private getLocalStorageTable() {
-    const result = JSON.parse(this.storageService.get(this.storageTableKey));
-    // console.log(`result: ${result}`)
+    console.log('aqui!')
+    const rawData = this.storageService.get(`${this.storageTableKey}:${this.user.username}`)
+    const result = JSON.parse(rawData);
+
     return result || [];
   }
 }
