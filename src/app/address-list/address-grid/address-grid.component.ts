@@ -1,11 +1,10 @@
-import {Component, OnInit, SkipSelf, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Address} from '../../interfaces/address';
-import {MatTable, MatTableDataSource} from '@angular/material/table';
+import {MatTableDataSource} from '@angular/material/table';
 import {AddressModalComponent} from '../adress-modal/address-modal.component';
 import {MatDialog} from '@angular/material/dialog';
 import {RemoveAddressModalComponent} from '../remove-address-modal/remove-address-modal.component';
 import {StorageService} from '../../storage.service';
-import {MatSort} from '@angular/material/sort';
 import {User} from '../../interfaces/user';
 import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -62,7 +61,6 @@ const MOCK_DATA: Address[] = [
 
 export class AddressGridComponent implements OnInit {
   columnNames = ['Numero', 'Nome', 'CEP', 'Rua', 'Bairro', 'Cidade', 'UF', 'actions'];
-  // columnNames = ['Numero', 'Nome', 'CEP', 'Rua', 'Complemento', 'Bairro', 'Cidade', 'UF', 'actions'];
   storageTableKey = 'address-table';
   dataList: Address[] = [];
   dataSource: MatTableDataSource<Address>;
@@ -74,7 +72,6 @@ export class AddressGridComponent implements OnInit {
     private snackBar: MatSnackBar,
     private storageService: StorageService
   ) {
-
   }
 
   ngOnInit(): void {
@@ -87,7 +84,6 @@ export class AddressGridComponent implements OnInit {
     }
     this.dataList = this.getLocalStorageTable();
     this.refreshTable();
-    // console.log(historyResult)
   }
 
   applyFilter(event: KeyboardEvent) {
@@ -119,10 +115,8 @@ export class AddressGridComponent implements OnInit {
         ;
         this.dataList.push(result);
       }
-      console.log('depois de salvar')
-      this.storageService.set(`${this.storageTableKey}:${this.user.username}`,
-        JSON.stringify(this.dataList));
-      // console.log('Actual LocalStorage: ', this.storageService.get(this.storageTableKey));
+      console.log('depois de salvar');
+      this.saveData();
 
       this.refreshTable();
     });
@@ -143,17 +137,20 @@ export class AddressGridComponent implements OnInit {
         return;
       }
       this.dataList.splice(this.dataList.indexOf(result), 1);
-      this.storageService.set(`${this.storageTableKey}:${this.user.username}`,
-        JSON.stringify(this.dataList));
+      this.saveData();
       this.refreshTable();
     });
   }
 
   private getLocalStorageTable() {
-    console.log('aqui!')
-    const rawData = this.storageService.get(`${this.storageTableKey}:${this.user.username}`)
+    const rawData = this.storageService.get(`${this.storageTableKey}:${this.user.username}`);
     const result = JSON.parse(rawData);
 
     return result || [];
+  }
+
+  private saveData() {
+    this.storageService.set(`${this.storageTableKey}:${this.user.username}`,
+      JSON.stringify(this.dataList));
   }
 }
