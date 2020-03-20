@@ -1,4 +1,10 @@
 # AddressList
+Projeto com fim avaliativo, além de treinamento pessoal. 
+
+É uma agenda telefônica simples. O usuário cria seu login, e com isso pode entrar na agenda.
+Cada agenda é diferente para cada usuário. Não foram usados grandes recursos de segurança e conexões cliente-servidor, uma vez que seu objetivo não era esse. 
+
+Os armazenamentos foram feitos em LocalStorage.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.6.
 
